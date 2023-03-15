@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-2">
+    <h5>Task update</h5>
+</div>
+<div class="container pt-2">
+    <form method="post">{% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        <div class="mb-3">
+            {{ form.non_field_errors }}
+            <div class="mb-3 pt-1">
+                <label class="form-label" for="{{ object.name.id_for_label }}">Task text</label>
+                <textarea class="form-control" name="name" id="id_name" rows="5">{{ form.name.value }}</textarea>
+            </div>
+            <div class="mb-3 pt-1">
+                <label class="form-lable" for="{{ object.dead_line.id_for_label }}">Deadline</label>
+                <input type="date" value='{{ object.dead_line|date:"Y-m-d" }}' name="dead_line" id="id_dead_line">
+            </div>
+            <div class="form-check form-switch pt-1">
+                <input class="form-check-input" type="checkbox" role="switch" name="is_active" id="id_is_active" checked/>
+                <label class="form-lable" for="{{ object.is_active.id_for_label }}">Task in progress</label>
+            </div>
+            <div class="mb-2 pt-2">
+                <label class="form-lable" for="{{ object.parent_task.id_for_label }}">Parent task</label>
+                <select class="form-select" id="id_parent_task" name="parent_task">
+                    {% if object.parent_task %}
+                        <option selected value="{{ object.parent_task.id }}">{{ object.parent_task.name }}</option>
+                        <option value="">No parent task</option>
+                    {% else %}
+                        <option selected value="">No parent task</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div class="mb-2 pt-2">
+                <label class="form-lable" for="{{ object.user.id_user }}">Executor</label>
+                <select class="form-select" id="id_user" name="user">
+                    {% if object.user %}
+                        <option selected value="{{ object.user.id }}">{{ object.user.username }}</option>
+                        <option value="">No task executor</option>
+                    {% else %}
+                        <option selected value="">No task executor</option>
+                    {% endif %}
+                    {% for user_ in users %}
+                        <option value="{{ user_.id }}">{{ user_.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-2 pt-2">
+                <label class="form-lable" for="{{ object.status.id_for_label }}">Status</label>
+                <select class="form-select" id="id_status" name="status">
+                    {% if object.status %}
+                        <option selected value="{{ object.status.id }}">{{ object.status.status }}</option>
+                        <option value="">--------</option>
+                    {% else %}
+                        <option selected value="">--------</option>
+                    {% endif %}
+                    {% for item_ in statuses %}
+                        <option value="{{ item_.id }}">{{ item_.status }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="btn-group py-5" role="group">
+                <input class="btn btn-secondary" type="submit" value="Update"></input>
+                <input class="btn btn-dark" type="reset" value="Reset"></input>
+                <a class="btn btn-secondary" href="../tasklist/">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

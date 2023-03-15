@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-2">
+    <h5>Task detail view</h5>
+</div>
+<div class="container pt-2">
+    <div class="mb-3 pt-1">
+        <label class="form-label" for="{{ object.name.id_for_label }}">Task text</label>
+        <textarea class="form-control" name="name" id="id_name" rows="5" readonly>{{ object.name }}</textarea>
+    </div>
+    <div class="mb-3 pt-1">
+        <label class="form-lable" for="{{ object.dead_line.id_for_label }}">Deadline</label>
+        <input type="date" value='{{ object.dead_line|date:"Y-m-d" }}' name="dead_line" id="id_dead_line" readonly>
+    </div>
+    <div class="form-check form-switch pt-1">
+        <input class="form-check-input" type="checkbox" role="switch" name="is_active" id="id_is_active"
+        {% if object.is_active %}
+        checked
+        {% endif %} disabled/>
+        <label class="form-lable" for="{{ object.is_active.id_for_label }}">Task in progress</label>
+    </div>
+    <div class="mb-3 pt-1">
+        <label class="form-lable" for="{{ object.created.id_for_label }}">Task creted time</label>
+        <input type="datetime" value='{{ object.created|date:"d.m.Y H:i" }}' name="created" id="id_created" readonly>
+    </div>
+    {% if object.complete_time %}
+        <div class="mb-3 pt-1">
+            <label class="form-lable" for="{{ object.complete_time.id_for_label }}">Finished at</label>
+            <input type="datetime" value='{{ object.complete_time|date:"Y-m-d H:i" }}' name="complete_time" id="id_complete_time" readonly>
+        </div>
+    {% endif %}
+    {% if object.parent_task %}
+        <div class="mb-3 pt-1">
+            <label class="form-lable" for="{{ object.parent_task.id_parent_task }}">Parent task</label>
+            <!-- <input type="input" value='{{ object.parent_task.name }}' name="parent_task" id="id_parent_task" readonly> -->
+            <p>{{ object.parent_task.name }}</p>
+        </div>
+    {% endif %}
+    <div class="mb-3 pt-1">
+        <label class="form-lable" for="{{ object.user.id_user }}">Executor</label>
+        <!-- <input type="input" value='{{ object.parent_task.name }}' name="parent_task" id="id_parent_task" readonly> -->
+        <p>{{ object.user.username }}</p>
+    </div>
+    <div class="mb-3 pt-1">
+        <label class="form-lable" for="{{ object.status.id_user }}">Status</label>
+        <!-- <input type="input" value='{{ object.parent_task.name }}' name="parent_task" id="id_parent_task" readonly> -->
+        <p>{{ object.status.status }}</p>
+    </div>
+        <!-- <p>Now {{ now|date:"d.m.Y" }}</p> -->
+        <div class="btn-group py-5" role="group">
+            <a class="btn btn-warning" href="../taskdelete/{{ object.id }}">Del</a>
+            <a class="btn btn-primary" href="../taskupdate/{{ object.id }}">Edit</a>
+            <a class="btn btn-secondary" href="../tasklist/">Cancel</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpRequest
+from django.utils import timezone
+from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
+from taskmanager.models import Task, TaskStatus
+from .serializers import TodoSerializer
+from .filters import TodoFilterSet
+from django.template import loader
+from django.contrib.auth import get_user_model
+
+# from datetime import datetime
+
+from rest_framework import viewsets, mixins
+from rest_framework import permissions
+from rest_framework.schemas.openapi import AutoSchema
+
+User = get_user_model()
+
+def current_datetime(request):
+    now = timezone.now()
+    # now = datetime.now()
+    # html = f'<html><body><h2>{now}</h2><br>{request.user}</body></html>'
+    template_name = 'time.html'
+    # return HttpResponse(html)
+    return render(request, template_name, {'now': now, 'user': request.user})
+
+def redirect_view(request):
+	return redirect("/tasklist")
+
+# class UserlistViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+#     queryset = User.objects.all().order_by('-username')
+#     serializer_class = UserSerializer
+#     # filterset_class =  TodoFilterSet
+
+#     def list(self, request, *args, **kwargs):
+#         '''.'''
+#         return super().list(request, *args, **kwargs)
+    
+# class StatuslistViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+#     queryset = TaskStatus.objects.all().order_by('-status')
+#     serializer_class = StatusSerializer
+
+class TodolistViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all().order_by('-id')
+    serializer_class = TodoSerializer
+    filterset_class =  TodoFilterSet
+
+    schema = AutoSchema(
+        tags=['Tasks'],
+        component_name='Task',
+        operation_id_base='Task',
+    )
+
+class MyModelListView(ListView):
+    model = Task
+    template_name = 'todo_list.html'
+
+class MyModelUpdateView(UpdateView):
+    model = Task
+    fields = [
+        'name',
+        'is_active',
+        'dead_line',
+        'parent_task',
+        'user',
+        'status'
+    ]
+    object_list = Task.objects.all().order_by('id')
+    template_name = 'todo_update_form.html'
+    success_url = '/tasklist/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['statuses'] = TaskStatus.objects.all()
+        context['users'] = User.objects.all()
+        return context
+
+
+class MyModelCreateView(CreateView):
+    model = Task
+    fields = [
+        'name',
+        'is_active',
+        'dead_line',
+        'parent_task',
+        'user',
+        'status'
+    ]
+    template_name = 'todo_create_form.html'
+    success_url = '/tasklist/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['statuses'] = TaskStatus.objects.all()
+        context['users'] = User.objects.all()
+        return context
+
+
+class MyModelDeleteView(DeleteView):
+    model = Task
+    template_name = 'todo_delete_form.html'
+    success_url = '/tasklist/'
+
+class MyModelDetailView(DetailView):
+    model = Task
+    template_name = 'todo_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
