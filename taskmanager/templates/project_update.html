@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-2">
+    <h5>Project update</h5>
+</div>
+<div class="container pt-2">
+    <form method="post">{% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        <div class="mb-3">
+            <!-- {{ form.non_field_errors }} -->
+            <div class="mb-3 pt-1">
+                <label class="form-label" for="{{ object.name.id_for_label }}">Project text</label>
+                <textarea class="form-control" name="name" id="id_name" rows="5">{{ form.name.value }}</textarea>
+            </div>
+            <!-- <div class="mb-3 pt-1">
+                <label class="form-lable" for="{{ object.dead_line.id_for_label }}">Deadline</label>
+                <input type="date" value='{{ object.dead_line|date:"Y-m-d" }}' name="dead_line" id="id_dead_line">
+            </div> -->
+            <!-- <div class="form-check form-switch pt-1">
+                <input class="form-check-input" type="checkbox" role="switch" name="is_active" id="id_is_active" checked/>
+                <label class="form-lable" for="{{ object.is_active.id_for_label }}">Task in progress</label>
+            </div> -->
+            <div class="btn-group py-5" role="group">
+                <input class="btn btn-secondary" type="submit" value="Update"></input>
+                <input class="btn btn-dark" type="reset" value="Reset"></input>
+                <a class="btn btn-secondary" href="../projectlist/">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

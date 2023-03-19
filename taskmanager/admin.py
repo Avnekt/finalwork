@@ -1,5 +1,5 @@
 from django.contrib import admin
-from taskmanager.models import Task, TaskStatus
+from taskmanager.models import Task, TaskStatus, Sprint, Project
 from django.db import models
 from django.utils import timezone
 
@@ -17,7 +17,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "name",
-        "is_active",
+        # "is_active",
         "dead_line",
         "status"
     ]
@@ -32,4 +32,27 @@ class TaskStatusAdmin(admin.ModelAdmin):
 
     list_display = [
         'status'
+    ]
+
+@admin.register(Sprint)
+class SprintAdmin(admin.ModelAdmin):
+    
+    list_display = [
+        "id",
+        "name",
+        "is_active",
+        "dead_line",
+    ]
+
+    actions = [
+        cancel_complete,
+        make_complete
+    ]
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    
+    list_display = [
+        "id",
+        "name",
     ]

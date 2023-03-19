@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container pt-2">
-    <h5>Create task</h5>
+    <h5>Create sprint</h5>
 </div>
 <div class="container pt-2">
     <form method="post">{% csrf_token %}
 
         <div class="mb-3 pt-1">
-            <label class="form-lable" for="{{ form.name.id_for_label }}">Task text</label>
+            <label class="form-lable" for="{{ form.name.id_for_label }}">Sprint text</label>
             <textarea class="form-control" name="name" id="id_name" placeholder="Task text" rows="5"></textarea>
         </div>
         <!-- <div class="form-check form-switch pt-1">
@@ -19,26 +19,11 @@
             <input type="date" value="now" name="dead_line" id="id_dead_line">
         </div>
         <div class="mb-2 pt-2">
-            <label class="form-lable" for="{{ form.parent_task.id_for_label }}">Parent task</label>
-            <select class="form-select" id="id_parent_task" name="parent_task">
-                <option selected value="">No parent task</option>
-            </select>
-        </div>
-        <div class="mb-2 pt-2">
-            <label class="form-lable" for="{{ form.user.id_for_label }}">Executor</label>
-            <select class="form-select" id="id_user" name="user">
-                <option selected value="">No user</option>
-                {% for user_ in users %}
-                    <option value="{{ user_.id }}">{{ user_.username }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-2 pt-2">
-            <label class="form-lable" for="{{ form.status.id_for_label }}">Status</label>
-            <select class="form-select" id="id_status" name="status">
+            <label class="form-lable" for="{{ form.project.id_for_label }}">Project</label>
+            <select class="form-select" id="id_project" name="project">
                 <option selected value="">--------</option>
-                {% for status_ in statuses %}
-                    <option value="{{ status_.id }}">{{ status_.status }}</option>
+                {% for project_ in projects %}
+                    <option value="{{ project_.id }}">{{ project_.name }}</option>
                 {% endfor %}
             </select>
         </div>

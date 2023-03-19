@@ -16,7 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from taskmanager.views import current_datetime, redirect_view
-from taskmanager.views import MyModelListView, MyModelUpdateView, MyModelCreateView, MyModelDeleteView, MyModelDetailView
+from taskmanager.views import *
+# (
+#     MyModelListView,
+#     MyModelUpdateView,
+#     MyModelCreateView,
+#     MyModelDeleteView,
+#     MyModelDetailView,
+#     SprintListView,
+#     SprintUpdateView,
+#     SprintCreateView,
+
+#     )
 from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
@@ -27,7 +38,17 @@ urlpatterns = [
     path("taskupdate/<int:pk>", MyModelUpdateView.as_view()),
     path("taskcreate/", MyModelCreateView.as_view()),
     path("taskdelete/<int:pk>", MyModelDeleteView.as_view()),
-    path('taskdetail/<int:pk>', MyModelDetailView.as_view()),
+    path("taskdetail/<int:pk>", MyModelDetailView.as_view()),
+    path("sprintlist/", SprintListView.as_view()),
+    path("sprintupdate/<int:pk>", SprintUpdateView.as_view()),
+    path("sprintcreate/", SprintCreateView.as_view()),
+    path("sprintdelete/<int:pk>", SprintDeleteView.as_view()),
+    path("sprintdetail/<int:pk>", SprintDetailView.as_view()),
+    path("projectlist/", ProjectListView.as_view()),
+    path("projectupdate/<int:pk>", ProjectUpdateView.as_view()),
+    path("projectcreate/", ProjectCreateView.as_view()),
+    path("projectdelete/<int:pk>", ProjectDeleteView.as_view()),
+    path("projectdetail/<int:pk>", ProjectDetailView.as_view()),
     path("api/", include("taskmanager.urls")),
 
     path('openapi/', get_schema_view(

@@ -6,7 +6,7 @@ class TodoFilterSet(dj_filters.FilterSet):
     """Набор фильтров для представления для модели todoList."""
     
     task = dj_filters.CharFilter(field_name="name", lookup_expr="icontains")
-    is_active = dj_filters.BooleanFilter(field_name="is_active", exclude=False)
+    # is_active = dj_filters.BooleanFilter(field_name="is_active", exclude=False)
 
     order_by_field = "ordering"
 

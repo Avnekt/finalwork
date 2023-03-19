@@ -1,25 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container pt-2">
-    <h5>Tasks list</h5>
+    <h5>Sprints list</h5>
 </div>
 <div class="container pt-2">
     <ol class="list-group list-group-numbered">
-        {% for task_ in object_list %}
+        {% for sprint_ in object_list %}
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">
-                        {{ task_.name }}
+                        {{ sprint_.name }}
                     </div>
-                    {% if task_.status %}
+                    {% if sprint_.status %}
                         <div class="btn-group justify-content-end" role="group" aria-label="Basic example">
-                            <span class="badge rounded-pill bg-secondary bg-sm">{{ task_.status }}</span>
+                            <a class="btn btn-light btn-sm">
+                                {{ sprint_.status }}
+                            </a >
                         </div>
                     {% endif %}
                 </div>  
                 <div class="btn-group justify-content-end" role="group" aria-label="Basic example">
-                    <a class="btn btn-warning btn-sm" href="../taskdelete/{{ task_.id }}">Del</a>
-                    <a class="btn btn-success btn-sm" href="../taskdetail/{{ task_.id }}">Overview</a>
+                    <a class="btn btn-warning btn-sm" href="../sprintdelete/{{ sprint_.id }}">Del</a>
+                    <a class="btn btn-success btn-sm" href="../sprintdetail/{{ sprint_.id }}">Overview</a>
                 </div>
             </li>
         {% empty %}
@@ -28,7 +30,7 @@
 <div class="container py-2">
     <h2>
         <span class="badge bg-warning">
-            No tasks yet.
+            No sprints yet.
         </span>
     </h2>
 </div>

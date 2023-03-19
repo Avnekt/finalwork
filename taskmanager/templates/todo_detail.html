@@ -12,13 +12,13 @@
         <label class="form-lable" for="{{ object.dead_line.id_for_label }}">Deadline</label>
         <input type="date" value='{{ object.dead_line|date:"Y-m-d" }}' name="dead_line" id="id_dead_line" readonly>
     </div>
-    <div class="form-check form-switch pt-1">
+    <!-- <div class="form-check form-switch pt-1">
         <input class="form-check-input" type="checkbox" role="switch" name="is_active" id="id_is_active"
         {% if object.is_active %}
         checked
         {% endif %} disabled/>
         <label class="form-lable" for="{{ object.is_active.id_for_label }}">Task in progress</label>
-    </div>
+    </div> -->
     <div class="mb-3 pt-1">
         <label class="form-lable" for="{{ object.created.id_for_label }}">Task creted time</label>
         <input type="datetime" value='{{ object.created|date:"d.m.Y H:i" }}' name="created" id="id_created" readonly>

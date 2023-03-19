@@ -23,14 +23,20 @@ class NonModelSerializer(serializers.Serializer):
 
 class TodoSerializer(serializers.ModelSerializer):
     """Сериализатор для модели TodoList."""
-    is_active = serializers.SerializerMethodField('get_task_status')
+    # is_active = serializers.SerializerMethodField('get_task_status')
     user = serializers.SerializerMethodField('get_task_username')
 
 
     class Meta:
         model = Task
         read_only_fields = ["id"]
-        fields = read_only_fields + ["name", "created", "is_active", "complete_time", "user"]
+        fields = read_only_fields + [
+            "name",
+            "created",
+            # "is_active",
+            "complete_time",
+            "user"
+            ]
 
     def to_internal_value(self, data):
         if self.context["request"]._request.method == "POST":
@@ -42,8 +48,8 @@ class TodoSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         return representation
     
-    def get_task_status(self, obj):
-        return obj.is_active
+    # def get_task_status(self, obj):
+    #     return obj.is_active
     
     def get_task_username(self, obj):
         if obj.user:

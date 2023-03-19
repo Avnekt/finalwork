@@ -13,7 +13,7 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = [
             'name',
-            'is_active',
+            # 'is_active',
             'dead_line',
             'parent_task'
         ]
@@ -34,7 +34,7 @@ class CreateForm(forms.ModelForm):
         model = Task
         fields = [
             'name',
-            'is_active',
+            # 'is_active',
             'dead_line',
             'parent_task'
         ]

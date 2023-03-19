@@ -1,5 +1,5 @@
 from django.test import TestCase
-from taskmanager.models import Task
+from taskmanager.models import Task, Sprint
 # from django.utils import timezone
 
 # Create your tests here.
@@ -13,12 +13,12 @@ from taskmanager.models import Task
 
 class TaskTestCase(TestCase):
     def setUp(self):
-        Task.objects.create(name="First task todo", is_active=True)
-        Task.objects.create(name="Second task todo", is_active=False)
+        Sprint.objects.create(name="First task todo", is_active=True)
+        Sprint.objects.create(name="Second task todo", is_active=False)
 
     def test_first_task(self):
         '''Test that active is only first task'''
-        queryset = Task.objects.filter(is_active=True)
+        queryset = Sprint.objects.filter(is_active=True)
         self.assertEqual(len(queryset), 1)
         self.assertEqual(queryset[0].name, "First task todo")
 
